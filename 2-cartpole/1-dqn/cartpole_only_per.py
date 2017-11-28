@@ -140,15 +140,19 @@ class Memory:  # stored as ( s, a, r, s_ ) in SumTree
     a = 0.6
 
     def __init__(self, capacity):
+        # create sumtree
         self.tree = SumTree(capacity)
 
+    # get priority
     def _getPriority(self, error):
         return (error + self.e) ** self.a
 
+    # store priority and sample
     def add(self, error, sample):
         p = self._getPriority(error)
         self.tree.add(p, sample)
 
+    # get sample using stochastic solution
     def sample(self, n):
         batch = []
         segment = self.tree.total() / n
@@ -163,6 +167,7 @@ class Memory:  # stored as ( s, a, r, s_ ) in SumTree
 
         return batch
 
+    # update priority
     def update(self, idx, error):
         p = self._getPriority(error)
         self.tree.update(idx, p)
