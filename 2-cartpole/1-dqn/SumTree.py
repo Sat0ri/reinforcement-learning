@@ -1,6 +1,8 @@
 import numpy
 
 
+# SumTree
+# a binary tree data structure where the parent’s value is the sum of its children
 class SumTree:
     write = 0
 
@@ -9,6 +11,7 @@ class SumTree:
         self.tree = numpy.zeros(2 * capacity - 1)
         self.data = numpy.zeros(capacity, dtype=object)
 
+    # update to the root node
     def _propagate(self, idx, change):
         parent = (idx - 1) // 2
 
@@ -17,6 +20,7 @@ class SumTree:
         if parent != 0:
             self._propagate(parent, change)
 
+    # find sample on leaf node
     def _retrieve(self, idx, s):
         left = 2 * idx + 1
         right = left + 1
@@ -32,6 +36,7 @@ class SumTree:
     def total(self):
         return self.tree[0]
 
+    # store priority and sample
     def add(self, p, data):
         idx = self.write + self.capacity - 1
 
@@ -42,12 +47,14 @@ class SumTree:
         if self.write >= self.capacity:
             self.write = 0
 
+    # update priority
     def update(self, idx, p):
         change = p - self.tree[idx]
 
         self.tree[idx] = p
         self._propagate(idx, change)
 
+    # get priority and sample
     def get(self, s):
         idx = self._retrieve(0, s)
         dataIdx = idx - self.capacity + 1

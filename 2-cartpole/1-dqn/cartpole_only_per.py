@@ -13,7 +13,7 @@ EPISODES = 500
 
 # DQN Agent for the Cartpole
 # it uses Neural Network to approximate q function
-# and replay memory & target q network
+# and replay memory with PER & target q network
 class DQNAgent:
     def __init__(self, state_size, action_size):
         # if you want to see Cartpole learning, then change to True
